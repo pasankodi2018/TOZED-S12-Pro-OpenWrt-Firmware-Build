@@ -135,8 +135,9 @@ and download the firmware image.
 ## 1. Flash OpenWrt Firmware
 
 Download the appropriate S12 PRO firmware from the GitHub Releases page.
+https://github.com/pasankodi2018/TOZED-S12-Pro-OpenWrt-Firmware-Build/releases/tag/v1.0.0
 
-Example:https://github.com/pasankodi2018/TOZED-S12-Pro-OpenWrt-Firmware-Build/releases/tag/v1.0.0
+Example:
 
 kwrt-07.06.2026-ramips-mt7621-tozed_zlt-s12-pro-squashfs-sysupgrade.bin
 
