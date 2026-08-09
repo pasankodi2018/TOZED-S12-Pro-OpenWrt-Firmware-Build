@@ -1,0 +1,92 @@
+_DEVICE=/dev/ttyUSB0
+_DEFAULT_LTE_BANDS="1 3 5 7 8 38 39 40 41"
+
+getsupportedbands() {
+	echo "$_DEFAULT_LTE_BANDS"
+}
+
+
+getinfo() {
+	echo "TOZED LT70 Spreadtrum Communication CO."
+}
+
+
+setbands() {
+    BANDS="$1"
+
+    tdd49_64=0
+    tdd33_48=0
+    fdd17_32=0
+    fdd1_16=0
+    fdd65_80=0
+
+    for band in $BANDS; do
+        case $band in
+            # FDD 1–16
+            [1-9]|1[0-6])
+                fdd1_16=$((fdd1_16 | (1 << (band-1))))
+                ;;
+            # FDD 17–32
+            1[7-9]|2[0-9]|3[0-2])
+                fdd17_32=$((fdd17_32 | (1 << (band-17))))
+                ;;
+            # TDD 33–48
+            3[3-9]|4[0-8])
+                tdd33_48=$((tdd33_48 | (1 << (band-33))))
+                ;;
+            # TDD 49–64
+            4[9-9]|5[0-9]|6[0-4])
+                tdd49_64=$((tdd49_64 | (1 << (band-49))))
+                ;;
+            # FDD 65–80
+            6[5-9]|7[0-9]|80)
+                fdd65_80=$((fdd65_80 | (1 << (band-65))))
+                ;;
+        esac
+    done
+
+    sms_tool -D -d "$_DEVICE" at "AT+SPLBAND=1,$tdd49_64,$tdd33_48,$fdd17_32,$fdd1_16,$fdd65_80"
+    sms_tool -D -d "$_DEVICE" at 'AT+CFUN=0'
+    sms_tool -D -d "$_DEVICE" at 'AT+CFUN=1'
+}
+
+
+getbands() {
+    O=$(sms_tool -D -d $_DEVICE at 'AT+SPLBAND=0' 2>/dev/null | grep +SPLBAND)
+    O=$(echo "$O" | tr -d '\r' | tr -d ' ')
+
+    case "$O" in
+    "+SPLBAND:0,0,0,0,0") echo "" ;;
+        "+SPLBAND:0,0,0,1,0") echo "1" ;;
+        "+SPLBAND:0,0,0,4,0") echo "3" ;;
+        "+SPLBAND:0,0,0,128,0") echo "8" ;;
+        "+SPLBAND:0,128,0,0,0") echo "40" ;;
+        "+SPLBAND:0,64,0,0,0") echo "41" ;;
+        "+SPLBAND:0,0,0,5,0") echo "1 3" ;;
+        "+SPLBAND:0,0,0,129,0") echo "1 8" ;;
+        "+SPLBAND:0,128,0,1,0") echo "1 40" ;;
+        "+SPLBAND:0,64,0,1,0") echo "1 41" ;;
+        "+SPLBAND:0,0,0,132,0") echo "3 8" ;;
+        "+SPLBAND:0,128,0,4,0") echo "3 40" ;;
+        "+SPLBAND:0,64,0,4,0") echo "3 41" ;;
+        "+SPLBAND:0,128,0,128,0") echo "8 40" ;;
+        "+SPLBAND:0,64,0,128,0") echo "8 41" ;;
+        "+SPLBAND:0,192,0,0,0") echo "40 41" ;;
+        "+SPLBAND:0,0,0,133,0") echo "1 3 8" ;;
+        "+SPLBAND:0,128,0,5,0") echo "1 3 40" ;;
+        "+SPLBAND:0,64,0,5,0") echo "1 3 41" ;;
+        "+SPLBAND:0,128,0,129,0") echo "1 8 40" ;;
+        "+SPLBAND:0,64,0,129,0") echo "1 8 41" ;;
+        "+SPLBAND:0,192,0,1,0") echo "1 40 41" ;;
+        "+SPLBAND:0,128,0,132,0") echo "3 8 40" ;;
+        "+SPLBAND:0,64,0,132,0") echo "3 8 41" ;;
+        "+SPLBAND:0,192,0,4,0") echo "3 40 41" ;;
+        "+SPLBAND:0,192,0,128,0") echo "8 40 41" ;;
+        "+SPLBAND:0,128,0,133,0") echo "1 3 8 40" ;;
+        "+SPLBAND:0,64,0,133,0") echo "1 3 8 41" ;;
+        "+SPLBAND:0,192,0,5,0") echo "1 3 40 41" ;;
+        "+SPLBAND:0,192,0,129,0") echo "1 8 40 41" ;;
+        "+SPLBAND:0,192,0,132,0") echo "3 8 40 41" ;;
+        "+SPLBAND:0,192,0,133,0") echo "1 3 8 40 41" ;;
+    esac
+}
