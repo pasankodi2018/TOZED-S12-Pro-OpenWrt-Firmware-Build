@@ -315,7 +315,7 @@ The default supported-band list is:
 
 1 3 5 7 8 38 39 40 41
 ## Troubleshooting
-Modem not detected
+### Modem not detected
 
 Check:
 
@@ -340,7 +340,7 @@ ls -l /usr/bin/internet-detector
 If it does not exist, reinstall the project using:
 
 sh /tmp/install.sh
-Modem band driver not found
+### Modem band driver not found
 
 Check:
 
@@ -368,7 +368,7 @@ Difficulty reconnecting to the network
 
 If you lose connectivity after band locking, restore a wider set of supported bands.
 
-Credits
+## Credits
 
 OpenWrt / KWRT:
 
