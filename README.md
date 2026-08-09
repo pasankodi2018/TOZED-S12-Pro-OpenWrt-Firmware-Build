@@ -67,7 +67,7 @@ The modem vendor/device ID is:
 17824055
 3GInfo Lite Support
 
-Adds TOZED LT70-C modem support to 3GInfo Lite.
+## Adds TOZED LT70-C modem support to 3GInfo Lite.
 
 Configuration location:
 
@@ -92,7 +92,7 @@ Carrier aggregation information
 LTE / LTE-A mode
 Modem LED Monitoring
 
-The project includes modem LED monitoring for the S12 PRO.
+## The project includes modem LED monitoring for the S12 PRO.
 
 LED status can indicate:
 
@@ -131,8 +131,8 @@ Releases → Latest Release → Assets
 
 and download the firmware image.
 
-Installation
-1. Flash OpenWrt Firmware
+## Installation
+## 1. Flash OpenWrt Firmware
 
 Download the appropriate S12 PRO firmware from the GitHub Releases page.
 
@@ -140,7 +140,7 @@ Example:
 
 kwrt-07.06.2026-ramips-mt7621-tozed_zlt-s12-pro-squashfs-sysupgrade.bin
 
-Flash the firmware using the appropriate OpenWrt upgrade method for your current firmware.
+## Flash the firmware using the appropriate OpenWrt upgrade method for your current firmware.
 
 Important
 
@@ -148,7 +148,7 @@ Do not interrupt power while the router is flashing.
 
 Wait until the router completely reboots.
 
-##2. Connect to the Router
+## 2. Connect to the Router
 
 After OpenWrt starts, connect through SSH.
 
