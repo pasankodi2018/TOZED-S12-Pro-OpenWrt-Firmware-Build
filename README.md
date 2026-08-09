@@ -366,7 +366,7 @@ Difficulty reconnecting to the network
 
 If you lose connectivity after band locking, restore a wider set of supported bands.
 
-## Credits
+# Credits
 
 OpenWrt / KWRT:
 
