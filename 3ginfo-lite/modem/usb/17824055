@@ -1,0 +1,72 @@
+# Tozed LT70-C (NCM)
+# Spreadtrum based. Looks like mostly stock spreadtrum firmware as well
+
+PROTO="ncm"
+
+at() {
+  sms_tool -D -d $DEVICE at "$1"
+}
+
+MODEL="$(echo "TOZED LT70 $(at 'AT+CGMI' | grep -v '^OK' | tr -d '\r\n' | xargs)" | sed 's/ V[0-9].*$//')"
+
+FW="$(at AT+SPTZVER | grep SL8563 | xargs echo -n | cut -c1-16) $(at 'AT+CGMM' | grep -o 'V[0-9].*' | tr -d '\r\n')"
+
+O=$(at 'AT+SPTZCMD="YXBwX2RlbW8gdGVzdF9uZXR3b3JrX2dldF9vcGVyYXRvcl9uYW1lfGdyZXAgT3xjdXQgLWIyNC18Y3V0IC1kJChlY2hvIC1lICcbJykgLWYx"')
+OPERATOR_NAME=$(echo "$O" | cut -d':' -f2 | tr -d '\n' | awk '{print $1}' | base64 -d)
+COPS="$OPERATOR_NAME"
+
+NR_CIMI=$(at AT+CIMI | xargs echo -n | cut -d' ' -f1)
+COPS_MCC=$(echo ${NR_CIMI} | cut -c1-3)
+COPS_MNC=$(echo ${NR_CIMI} | cut -c4-5)
+COPS_NUM=$(echo ${NR_CIMI} | cut -c1-5)
+
+NR_IMEI=$(at "AT+CGSN" | xargs echo -n | cut -d' ' -f1)
+
+SPD_DATA=$(at "AT+SPENGMD=0,6,0" | xargs echo -n | awk '{print $1}')
+SPD_DATA2=$(at "AT+SPENGMD=0,0,6" | xargs echo -n | awk '{print $1}')
+
+RSSI="-$(echo $SPD_DATA2 | cut -d, -f75 | cut -d- -f3)"
+PBAND=$(echo $SPD_DATA | cut -d',' -f1)
+PCI=$(echo $SPD_DATA | cut -d',' -f3 | cut -d'-' -f2)
+EARFCN=$(echo $SPD_DATA | cut -d',' -f2 | cut -d'-' -f2)
+
+O=$(at 'AT+CSQ')
+DATA=$(echo "$O" | xargs)
+CSQ=$(echo "$DATA" | grep CSQ | awk -F[,\ ] '/\+CSQ/ {print $2}')
+if [ "x$CSQ" = "x" ]; then
+  CSQ=-1
+else
+        CSQ_PER=$(($CSQ * 100/31))
+fi
+
+O=$(at 'AT+CGREG?;+CCID;+ZRSSI?')
+DATA=$(echo "$O" | xargs)
+
+REG=$(echo "$DATA" | grep CGREG | cut -d',' -f2)
+#Forced registration
+#REG=1
+
+CID_HEX=$(echo "$DATA" | grep CGREG | cut -d',' -f4 | xargs echo)
+CID_DEC=$(printf "%d" 0x${CID_HEX})
+
+O=$(at 'AT+CCID')
+NR_ICCID=$(echo "$O" | grep CCID | xargs echo | awk '{print $2}')
+
+O=$(at 'AT+ZRSSI?')
+ZRSSI_DATA=$(echo "$O" | grep ZRSSI | awk '{print $2}')
+RSRP=$(echo $ZRSSI_DATA | cut -d',' -f1)
+RSRQ=$(echo $ZRSSI_DATA | cut -d',' -f2)
+SINR=$(echo $ZRSSI_DATA | cut -d',' -f4)
+
+CA_BAND=$(echo $SPD_DATA | cut -d',' -f2 | cut -d'-' -f1)
+[ "$CA_BAND" -ne 0 ] && S1BAND=$CA_BAND
+CA_PCI=$(echo $SPD_DATA | cut -d',' -f4 | cut -d'-' -f1)
+[ "$CA_PCI" -ne 0 ] && S1PCI=$CA_PCI
+CA_EARFCN=$(echo $SPD_DATA | cut -d',' -f3 | cut -d'-' -f1)
+[ "$CA_EARFCN" -ne 0 ] && S1EARFCN=$CA_EARFCN
+
+if [ "$CA_BAND" -ne 0 ]; then
+  MODE="LTE-A / $(band4g $PBAND) / $(band4g $CA_BAND)"
+else
+  MODE="LTE | $(band4g $PBAND)"
+fi
