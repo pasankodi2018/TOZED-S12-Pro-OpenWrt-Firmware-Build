@@ -1,95 +1,190 @@
 #!/bin/sh /etc/rc.common
-# /etc/init.d/modem_led
-# Self-contained Signal LED monitor
+
 START=95
 STOP=10
+
 USE_PROCD=1
 
 DEVICE="/dev/ttyUSB0"
 LED_PREFIX="blue:signal"
+BLUE_LED="/sys/class/leds/blue:modem/brightness"
+RED_LED="/sys/class/leds/red:modem/brightness"
+
 UPDATE_INTERVAL=10
 LOG_TAG="Modem LED"
 
-start_service() {
-    procd_open_instance
-    procd_set_param respawn
-
-    procd_set_param command /bin/sh -c "
-sleep 30
-
-DEVICE='${DEVICE}'
-LED_PREFIX='${LED_PREFIX}'
-UPDATE_INTERVAL=${UPDATE_INTERVAL}
-LOG_TAG='${LOG_TAG}'
-
-current_level=0
-
 get_rsrp() {
-    DATA=\$(sms_tool -D -d \"\$DEVICE\" at 'AT+ZRSSI?' 2>/dev/null)
-    ZRSSI_LINE=\$(echo \"\$DATA\" | grep '+ZRSSI:')
-    RSRP=\$(echo \"\$ZRSSI_LINE\" | awk '{print \$2}' | cut -d',' -f1)
-    [ -z \"\$RSRP\" ] && RSRP=-140
-    echo \"\$RSRP\"
+    DATA="$(sms_tool -D -d "$DEVICE" at 'AT+ZRSSI?' 2>/dev/null)"
+    ZRSSI_LINE="$(echo "$DATA" | grep '+ZRSSI:')"
+
+    RSRP="$(echo "$ZRSSI_LINE" | awk '{print $2}' | cut -d',' -f1)"
+
+    [ -z "$RSRP" ] && RSRP=-140
+
+    echo "$RSRP"
 }
 
-set_leds() {
-    level=\$1
-    for i in \$(seq 1 5); do
-        LED_PATH=\"/sys/class/leds/\${LED_PREFIX}\${i}/brightness\"
-        if [ \"\$i\" -le \"\$level\" ]; then
-            echo 1 > \"\$LED_PATH\"
+set_signal_leds() {
+    level="$1"
+
+    for i in 1 2 3 4 5; do
+        LED_PATH="/sys/class/leds/${LED_PREFIX}${i}/brightness"
+
+        if [ "$i" -le "$level" ]; then
+            echo 1 > "$LED_PATH"
         else
-            echo 0 > \"\$LED_PATH\"
+            echo 0 > "$LED_PATH"
         fi
     done
 }
 
-logger -t \"\$LOG_TAG\" 'Signal LED monitor started.'
-
-while [ ! -e \"\$DEVICE\" ]; do
-    logger -t \"\$LOG_TAG\" \"\$DEVICE not found, waiting...\"
-    sleep 2
-done
-
-while true; do
-    rsrp=\$(get_rsrp)
-
-    if [ \"\$rsrp\" -eq -140 ]; then
-        # no valid reading, skip updating LEDs
-        sleep \"\$UPDATE_INTERVAL\"
-        continue
-    fi
-
-    if [ \"\$rsrp\" -ge -60 ]; then
-        level=5
-    elif [ \"\$rsrp\" -ge -70 ]; then
-        level=4
-    elif [ \"\$rsrp\" -ge -80 ]; then
-        level=3
-    elif [ \"\$rsrp\" -ge -90 ]; then
-        level=2
-    elif [ \"\$rsrp\" -ge -100 ]; then
-        level=1
+set_internet_led() {
+    if [ "$1" = "online" ]; then
+        echo 1 > "$BLUE_LED"
+        echo 0 > "$RED_LED"
     else
-        level=0
+        echo 0 > "$BLUE_LED"
+        echo 1 > "$RED_LED"
+    fi
+}
+
+check_internet() {
+
+    # Prefer curl if available
+    if command -v curl >/dev/null 2>&1; then
+        curl -fsS \
+            --connect-timeout 5 \
+            --max-time 10 \
+            -o /dev/null \
+            https://www.google.com
+
+        return $?
     fi
 
-    if [ \"\$level\" -ne \"\$current_level\" ]; then
-        set_leds \"\$level\"
-        current_level=\"\$level\"
-        logger -t \"\$LOG_TAG\" \"RSRP=\$rsrp -> LED level=\$level\"
+    # Otherwise use wget
+    if command -v wget >/dev/null 2>&1; then
+        wget -q \
+            -T 10 \
+            -O /dev/null \
+            https://www.google.com
+
+        return $?
     fi
 
-    sleep \"\$UPDATE_INTERVAL\"
-done
-"
+    return 1
+}
+
+start_service() {
+
+    procd_open_instance
+
+    procd_set_param command /bin/sh -c '
+        DEVICE="/dev/ttyUSB0"
+        LED_PREFIX="blue:signal"
+        BLUE_LED="/sys/class/leds/blue:modem/brightness"
+        RED_LED="/sys/class/leds/red:modem/brightness"
+
+        logger -t "Modem LED" "Modem LED monitor started"
+
+        while [ ! -e "$DEVICE" ]; do
+            logger -t "Modem LED" "$DEVICE not found, waiting..."
+            sleep 5
+        done
+
+        while true; do
+
+            # -------------------------
+            # Signal strength
+            # -------------------------
+
+            DATA="$(sms_tool -D -d "$DEVICE" at "AT+ZRSSI?" 2>/dev/null)"
+            ZRSSI_LINE="$(echo "$DATA" | grep "+ZRSSI:")"
+            RSRP="$(echo "$ZRSSI_LINE" | awk "{print \$2}" | cut -d"," -f1)"
+
+            if [ -z "$RSRP" ]; then
+                RSRP=-140
+            fi
+
+            if [ "$RSRP" -ge -80 ]; then
+                LEVEL=5
+            elif [ "$RSRP" -ge -90 ]; then
+                LEVEL=4
+            elif [ "$RSRP" -ge -100 ]; then
+                LEVEL=3
+            elif [ "$RSRP" -ge -110 ]; then
+                LEVEL=2
+            elif [ "$RSRP" -ge -120 ]; then
+                LEVEL=1
+            else
+                LEVEL=0
+            fi
+
+            for i in 1 2 3 4 5; do
+                LED_PATH="/sys/class/leds/${LED_PREFIX}${i}/brightness"
+
+                if [ "$i" -le "$LEVEL" ]; then
+                    echo 1 > "$LED_PATH"
+                else
+                    echo 0 > "$LED_PATH"
+                fi
+            done
+
+            # -------------------------
+            # Internet status
+            # -------------------------
+
+            if command -v curl >/dev/null 2>&1; then
+
+                curl -fsS \
+                    --connect-timeout 5 \
+                    --max-time 10 \
+                    -o /dev/null \
+                    https://www.google.com
+
+                INTERNET=$?
+
+            elif command -v wget >/dev/null 2>&1; then
+
+                wget -q \
+                    -T 10 \
+                    -O /dev/null \
+                    https://www.google.com
+
+                INTERNET=$?
+
+            else
+                INTERNET=1
+            fi
+
+            if [ "$INTERNET" -eq 0 ]; then
+                echo 1 > "$BLUE_LED"
+                echo 0 > "$RED_LED"
+                STATUS="ONLINE"
+            else
+                echo 0 > "$BLUE_LED"
+                echo 1 > "$RED_LED"
+                STATUS="OFFLINE"
+            fi
+
+            logger -t "Modem LED" "RSRP=${RSRP} dBm Signal=${LEVEL}/5 Internet=${STATUS}"
+
+            sleep 10
+
+        done
+    '
+
+    procd_set_param respawn
     procd_close_instance
 }
 
 stop_service() {
-    logger -t "$LOG_TAG" "Stopping service..."
-    killall -q sms_tool
-    for i in $(seq 1 5); do
+
+    logger -t "$LOG_TAG" "Stopping modem LED monitor"
+
+    for i in 1 2 3 4 5; do
         echo 0 > "/sys/class/leds/${LED_PREFIX}${i}/brightness"
     done
+
+    echo 0 > "$BLUE_LED"
+    echo 0 > "$RED_LED"
 }
