@@ -148,7 +148,7 @@ Do not interrupt power while the router is flashing.
 
 Wait until the router completely reboots.
 
-2. Connect to the Router
+##2. Connect to the Router
 
 After OpenWrt starts, connect through SSH.
 
@@ -159,21 +159,27 @@ ssh root@192.168.1.1
 Check the router:
 
 uname -a
-3. One-Click Installation
+## 3. One-Click Installation
 
 Download the installation script:
 
+```sh
 wget -O /tmp/install.sh https://raw.githubusercontent.com/pasankodi2018/S12-Pro-OpenWrt-Firmware-Build/main/install.sh
+```
 
 Make it executable:
 
+```sh
 chmod +x /tmp/install.sh
+```
 
-Run:
+Run the installer:
 
+```sh
 sh /tmp/install.sh
+```
 
-The installer installs the required S12 PRO modem support and scripts.
+The installer automatically installs the required TOZED ZLT S12 PRO modem support and scripts.
 
 4. Verify the Modem
 
@@ -204,7 +210,7 @@ Example response:
 +ZRSSI: -76,-7,0,14
 
 OK
-5. Verify Modem Band Driver
+## 5. Verify Modem Band Driver
 
 Check:
 
