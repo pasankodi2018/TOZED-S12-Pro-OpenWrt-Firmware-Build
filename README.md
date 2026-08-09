@@ -131,7 +131,7 @@ Releases → Latest Release → Assets
 
 and download the firmware image.
 
-## Installation
+# Installation
 ## 1. Flash OpenWrt Firmware
 
 Download the appropriate S12 PRO firmware from the GitHub Releases page.
@@ -248,19 +248,17 @@ Before:
 
 exit 0
 
-add:
-
-## Hard reset network stack on boot
-sleep 10
-/etc/init.d/network restart
+add:  ## Hard reset network stack on boot
+      sleep 10
+      /etc/init.d/network restart
 
 The end of /etc/rc.local should look like:
 
-## Hard reset network stack on boot
+(## Hard reset network stack on boot
 sleep 10
 /etc/init.d/network restart
 
-exit 0
+exit 0)
 
 Save the file and reboot:
 
@@ -314,7 +312,7 @@ B41	TDD
 The default supported-band list is:
 
 1 3 5 7 8 38 39 40 41
-## Troubleshooting
+# Troubleshooting
 ### Modem not detected
 
 Check:
