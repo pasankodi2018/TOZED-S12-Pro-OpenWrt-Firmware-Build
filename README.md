@@ -250,13 +250,13 @@ exit 0
 
 add:
 
-# Hard reset network stack on boot
+## Hard reset network stack on boot
 sleep 10
 /etc/init.d/network restart
 
 The end of /etc/rc.local should look like:
 
-# Hard reset network stack on boot
+## Hard reset network stack on boot
 sleep 10
 /etc/init.d/network restart
 
