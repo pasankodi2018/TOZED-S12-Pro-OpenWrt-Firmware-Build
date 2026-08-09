@@ -181,7 +181,7 @@ sh /tmp/install.sh
 
 The installer automatically installs the required TOZED ZLT S12 PRO modem support and scripts.
 
-4. Verify the Modem
+## 4. Verify the Modem
 
 Check the modem device:
 
@@ -227,7 +227,7 @@ _DEVICE=/dev/ttyUSB0
 Default LTE bands:
 
 1 3 5 7 8 38 39 40 41
-6. Verify 3GInfo Lite
+## 6. Verify 3GInfo Lite
 
 Check:
 
@@ -237,7 +237,7 @@ The TOZED LT70-C configuration should be present.
 
 This allows 3GInfo Lite to identify the modem and display modem/network information.
 
-7. Boot Network Restart Fix
+## 7. Boot Network Restart Fix
 
 If the modem is not detected correctly immediately after boot, add the following to:
 
@@ -281,7 +281,7 @@ S12-Pro-OpenWrt-Firmware-Build/
         └── usb/
             └── 17824055
 
-The firmware itself is distributed separately through:
+## The firmware itself is distributed separately through:
 
 GitHub Releases
 Modem Information
@@ -297,7 +297,7 @@ Example Signal Command
 sms_tool -D -d /dev/ttyUSB0 at 'AT+ZRSSI?'
 Supported LTE Bands
 
-The custom modemband driver supports:
+## The custom modemband driver supports:
 
 LTE Band	Type
 B1	FDD
@@ -313,7 +313,7 @@ B41	TDD
 The default supported-band list is:
 
 1 3 5 7 8 38 39 40 41
-Troubleshooting
+## Troubleshooting
 Modem not detected
 
 Check:
