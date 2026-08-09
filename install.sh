@@ -2,23 +2,37 @@
 
 REPO="https://raw.githubusercontent.com/pasankodi2018/Kwrt-modem-led/main"
 
-echo "Installing Kwrt Modem LED scripts..."
+echo "======================================"
+echo " TOZED ZLT S12 Pro Modem LED Installer"
+echo "======================================"
+echo ""
 
-mkdir -p /etc/init.d
+echo "[1/4] Downloading modem LED service..."
 
 wget -O /etc/init.d/modem_led "$REPO/modem_led"
-wget -O /etc/init.d/internet-detector "$REPO/internet-detector"
+
+if [ $? -ne 0 ]; then
+    echo "ERROR: Failed to download modem_led"
+    exit 1
+fi
+
+echo "[2/4] Setting permissions..."
 
 chmod +x /etc/init.d/modem_led
-chmod +x /etc/init.d/internet-detector
+
+echo "[3/4] Enabling service at boot..."
 
 /etc/init.d/modem_led enable
-/etc/init.d/internet-detector enable
+
+echo "[4/4] Starting service..."
 
 /etc/init.d/modem_led restart
-/etc/init.d/internet-detector restart
 
 echo ""
-echo "Installation completed!"
-echo "Modem LED service: OK"
-echo "Internet detector: OK"
+echo "======================================"
+echo " Installation completed!"
+echo "======================================"
+echo ""
+echo "Check service status with:"
+echo "  /etc/init.d/modem_led status"
+echo ""
