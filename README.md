@@ -47,7 +47,7 @@ Adds TOZED LT70-C support to `modemband`.
 
 Supported LTE bands:
 
-```text
+
 B1
 B3
 B5
