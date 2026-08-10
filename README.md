@@ -157,8 +157,6 @@ default in kwrt
 
 ssh root@10.0.0.1
 
-Check the router:
-
 username - root
 
 password - root
