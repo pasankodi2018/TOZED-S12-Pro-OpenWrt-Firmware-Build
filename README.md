@@ -153,14 +153,16 @@ Wait until the router completely reboots.
 
 After OpenWrt starts, connect through SSH.
 
-Example:
+default in kwrt 
 
 ssh root@10.0.0.1
 
 Check the router:
 
 username - root
-password- root
+
+password - root
+
 ## 3. One-Click Installation
 
 Download the installation script:
