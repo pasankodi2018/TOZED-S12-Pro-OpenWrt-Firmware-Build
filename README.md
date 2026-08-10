@@ -264,22 +264,7 @@ exit 0)
 Save the file and reboot:
 
 reboot
-Project Structure
-S12-Pro-OpenWrt-Firmware-Build/
-│
-├── README.md
-│
-├── install.sh
-│
-├── modem_led
-│
-├── modemband/
-│   └── 17824055
-│
-└── 3ginfo-lite/
-    └── modem/
-        └── usb/
-            └── 17824055
+
 
 ## The firmware itself is distributed separately through:
 
