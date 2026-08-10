@@ -159,7 +159,8 @@ ssh root@10.0.0.1
 
 Check the router:
 
-uname -a
+username - root
+password- root
 ## 3. One-Click Installation
 
 Download the installation script:
