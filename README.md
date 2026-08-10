@@ -155,7 +155,7 @@ After OpenWrt starts, connect through SSH.
 
 Example:
 
-ssh root@192.168.1.1
+ssh root@10.0.0.1
 
 Check the router:
 
