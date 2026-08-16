@@ -40,10 +40,15 @@ echo "-----------------------------------------------------"
 
 opkg update
 
-if [ $? -ne 0 ]; then
-    echo "ERROR: opkg update failed."
-    echo "Check your Internet connection and package feeds."
-    exit 1
+echo "-----------------------------------------------------"
+echo " Updating Package Lists..."
+echo "-----------------------------------------------------"
+
+if opkg update; then
+    echo "Package lists updated successfully."
+else
+    echo "WARNING: opkg update encountered an error."
+    echo "Continuing installation..."
 fi
 
 
