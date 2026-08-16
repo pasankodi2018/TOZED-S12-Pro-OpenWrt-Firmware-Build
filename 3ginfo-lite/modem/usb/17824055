@@ -54,9 +54,9 @@ NR_ICCID=$(echo "$O" | grep CCID | xargs echo | awk '{print $2}')
 
 O=$(at 'AT+ZRSSI?')
 ZRSSI_DATA=$(echo "$O" | grep ZRSSI | awk '{print $2}')
-RSRP=$(echo $ZRSSI_DATA | cut -d',' -f1)
-RSRQ=$(echo $ZRSSI_DATA | cut -d',' -f2)
-SINR=$(echo $ZRSSI_DATA | cut -d',' -f4)
+RSRP=$(echo "$ZRSSI_DATA" | cut -d',' -f1 | tr -d '\r\n')
+RSRQ=$(echo "$ZRSSI_DATA" | cut -d',' -f2 | tr -d '\r\n')
+SINR=$(echo "$ZRSSI_DATA" | cut -d',' -f4 | tr -d '\r\n')
 
 CA_BAND=$(echo $SPD_DATA | cut -d',' -f2 | cut -d'-' -f1)
 [ "$CA_BAND" -ne 0 ] && S1BAND=$CA_BAND
