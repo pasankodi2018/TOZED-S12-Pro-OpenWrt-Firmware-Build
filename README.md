@@ -1,3 +1,6 @@
+<img width="815" height="640" alt="CaptureZZ" src="https://github.com/user-attachments/assets/7caa4594-8504-40f8-99d6-c3faca2f00c5" />
+<img width="616" height="624" alt="CaptureSS" src="https://github.com/user-attachments/assets/3bfa323f-a265-4d29-98ed-66e7406029f5" />
+<img width="1341" height="660" alt="CaptureDS" src="https://github.com/user-attachments/assets/2f2172ca-609f-4100-97ed-8b3c69c21bba" />
 # TOZED ZLT S12 PRO – OpenWrt Firmware Build
 
 Custom OpenWrt firmware and configuration scripts for the **TOZED ZLT S12 PRO** 4G LTE router.
