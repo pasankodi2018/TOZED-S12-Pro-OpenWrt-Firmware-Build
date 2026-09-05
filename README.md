@@ -106,6 +106,9 @@ Internet available
 Internet unavailable
 Boot Network Detection Fix
 
+<img width="1000" height="1000" alt="s12_4" src="https://github.com/user-attachments/assets/e3178bf9-b9d6-402c-8881-442fecef5329" />
+
+
 Some S12 PRO units may not correctly detect the LTE modem/network immediately after power-on.
 
 The project can restart the OpenWrt network service automatically after boot
