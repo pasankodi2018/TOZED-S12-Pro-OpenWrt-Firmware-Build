@@ -67,6 +67,8 @@ The modem vendor/device ID is:
 17824055
 3GInfo Lite Support
 
+<img width="815" height="640" alt="CaptureZZ" src="https://github.com/user-attachments/assets/7caa4594-8504-40f8-99d6-c3faca2f00c5" />
+
 ## Adds TOZED LT70-C modem support to 3GInfo Lite.
 
 Configuration location:
@@ -92,6 +94,8 @@ Carrier aggregation information
 LTE / LTE-A mode
 Modem LED Monitoring
 
+<img width="616" height="624" alt="CaptureSS" src="https://github.com/user-attachments/assets/3bfa323f-a265-4d29-98ed-66e7406029f5" />
+
 ## The project includes modem LED monitoring for the S12 PRO.
 
 LED status can indicate:
@@ -104,12 +108,7 @@ Boot Network Detection Fix
 
 Some S12 PRO units may not correctly detect the LTE modem/network immediately after power-on.
 
-The project can restart the OpenWrt network service automatically after boot:
-
-sleep 10
-/etc/init.d/network restart
-
-This gives the modem time to initialize before restarting the network stack.
+The project can restart the OpenWrt network service automatically after boot
 
 Firmware
 Firmware Target
@@ -249,6 +248,6 @@ TOZED ZLT S12 PRO:
 MT7621 + TOZED LT70-C
 
 This repository contains custom configuration and scripts created for the TOZED ZLT S12 PRO.
-<img width="815" height="640" alt="CaptureZZ" src="https://github.com/user-attachments/assets/7caa4594-8504-40f8-99d6-c3faca2f00c5" />
+
 <img width="616" height="624" alt="CaptureSS" src="https://github.com/user-attachments/assets/3bfa323f-a265-4d29-98ed-66e7406029f5" />
 <img width="1341" height="660" alt="CaptureDS" src="https://github.com/user-attachments/assets/2f2172ca-609f-4100-97ed-8b3c69c21bba" />
