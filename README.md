@@ -254,5 +254,8 @@ MT7621 + TOZED LT70-C
 
 This repository contains custom configuration and scripts created for the TOZED ZLT S12 PRO.
 
+<img width="1273" height="667" alt="image" src="https://github.com/user-attachments/assets/68647089-3592-4388-886d-64c1c46598bc" />
 
 <img width="1341" height="660" alt="CaptureDS" src="https://github.com/user-attachments/assets/2f2172ca-609f-4100-97ed-8b3c69c21bba" />
+<img width="718" height="600" alt="image" src="https://github.com/user-attachments/assets/d42bce4f-fdcf-42a4-8bbf-c6e221179add" />
+
