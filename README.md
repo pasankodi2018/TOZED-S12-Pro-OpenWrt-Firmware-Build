@@ -245,6 +245,7 @@ If you lose connectivity after band locking, restore a wider set of supported ba
 OpenWrt / KWRT:
 
 https://openwrt.org/
+[openwrt.ai](https://openwrt.ai/)
 
 TOZED ZLT S12 PRO:
 
@@ -252,5 +253,5 @@ MT7621 + TOZED LT70-C
 
 This repository contains custom configuration and scripts created for the TOZED ZLT S12 PRO.
 
-<img width="616" height="624" alt="CaptureSS" src="https://github.com/user-attachments/assets/3bfa323f-a265-4d29-98ed-66e7406029f5" />
+
 <img width="1341" height="660" alt="CaptureDS" src="https://github.com/user-attachments/assets/2f2172ca-609f-4100-97ed-8b3c69c21bba" />
