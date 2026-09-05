@@ -186,7 +186,7 @@ sh /tmp/install.sh
 The installer automatically installs the required TOZED ZLT S12 PRO modem support and scripts.
 
 
-# Troubleshooting
+## Troubleshooting
 ### Modem not detected
 
 Check:
@@ -245,7 +245,8 @@ If you lose connectivity after band locking, restore a wider set of supported ba
 OpenWrt / KWRT:
 
 https://openwrt.org/
-[openwrt.ai](https://openwrt.ai/)
+
+https://openwrt.ai/
 
 TOZED ZLT S12 PRO:
 
