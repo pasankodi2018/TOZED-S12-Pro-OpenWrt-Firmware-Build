@@ -254,6 +254,29 @@ MT7621 + TOZED LT70-C
 
 This repository contains custom configuration and scripts created for the TOZED ZLT S12 PRO.
 
+
+---
+
+## 💬 Need Help?
+
+Having an issue with this project?  
+Feel free to contact me on WhatsApp for any questions, issues, or support.
+
+<p align="center">
+  <a href="https://wa.me/qr/NT32SB4BJB5VA1">
+    <img src="shared_qr_code.png" width="250" alt="WhatsApp Contact QR Code">
+  </a>
+</p>
+
+<p align="center">
+  <b>📱 Scan the QR code or click below to contact me</b>
+</p>
+
+<p align="center">
+  <a href="https://wa.me/qr/NT32SB4BJB5VA1">
+    <img src="https://img.shields.io/badge/Contact%20on%20WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" alt="Contact on WhatsApp">
+  </a>
+</p>
 <img width="1273" height="667" alt="image" src="https://github.com/user-attachments/assets/68647089-3592-4388-886d-64c1c46598bc" />
 
 <img width="1341" height="660" alt="CaptureDS" src="https://github.com/user-attachments/assets/2f2172ca-609f-4100-97ed-8b3c69c21bba" />
