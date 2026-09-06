@@ -275,7 +275,8 @@ Feel free to contact me on WhatsApp for any questions, issues, or support.
 
 <p align="center">
   <a href="https://wa.me/qr/NT32SB4BJB5VA1">
-    <img src="https://img.shields.io/badge/Contact%20on%20WhatsApp-25D366?style=for-the-badge&logo=whatsapp&logoColor=white" alt="Contact on WhatsApp">
+    <img width="483" height="472" alt="shared_qr_code" src="https://github.com/user-attachments/assets/079ffb52-47e8-47ef-b130-fe2b5b68bb9c" />
+
   </a>
 </p>
 <img width="1273" height="667" alt="image" src="https://github.com/user-attachments/assets/68647089-3592-4388-886d-64c1c46598bc" />
