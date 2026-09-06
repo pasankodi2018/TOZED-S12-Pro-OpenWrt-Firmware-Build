@@ -269,11 +269,12 @@ Feel free to contact me on WhatsApp for any questions, issues, or support.
 
 <p align="center">
   <b>📱 Scan the QR code or click below to contact me</b>
+ <a href="https://wa.me/qr/NT32SB4BJB5VA1">
 </p>
 
 <p align="center">
   <a href="https://wa.me/qr/NT32SB4BJB5VA1">
-    <img width="48.3" height="47.2" alt="shared_qr_code" src="https://github.com/user-attachments/assets/079ffb52-47e8-47ef-b130-fe2b5b68bb9c" />
+    <img width="240" height="235" alt="shared_qr_code" src="https://github.com/user-attachments/assets/079ffb52-47e8-47ef-b130-fe2b5b68bb9c" />
 
   </a>
 </p>
