@@ -263,9 +263,7 @@ Having an issue with this project?
 Feel free to contact me on WhatsApp for any questions, issues, or support.
 
 <p align="center">
-  <a href="https://wa.me/qr/NT32SB4BJB5VA1">
-    <img width="864" height="1536" alt="image" src="https://github.com/user-attachments/assets/23cab5de-7d13-41c3-a4d3-058622510d6b" />
-
+ 
   </a>
 </p>
 
@@ -275,7 +273,7 @@ Feel free to contact me on WhatsApp for any questions, issues, or support.
 
 <p align="center">
   <a href="https://wa.me/qr/NT32SB4BJB5VA1">
-    <img width="483" height="472" alt="shared_qr_code" src="https://github.com/user-attachments/assets/079ffb52-47e8-47ef-b130-fe2b5b68bb9c" />
+    <img width="48.3" height="47.2" alt="shared_qr_code" src="https://github.com/user-attachments/assets/079ffb52-47e8-47ef-b130-fe2b5b68bb9c" />
 
   </a>
 </p>
