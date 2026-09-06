@@ -264,7 +264,8 @@ Feel free to contact me on WhatsApp for any questions, issues, or support.
 
 <p align="center">
   <a href="https://wa.me/qr/NT32SB4BJB5VA1">
-    <img src="shared_qr_code.png" width="250" alt="WhatsApp Contact QR Code">
+    <img width="864" height="1536" alt="image" src="https://github.com/user-attachments/assets/23cab5de-7d13-41c3-a4d3-058622510d6b" />
+
   </a>
 </p>
 
