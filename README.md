@@ -67,7 +67,7 @@ The modem vendor/device ID is:
 17824055
 3GInfo Lite Support
 
-<img width="815" height="640" alt="CaptureZZ" src="https://github.com/user-attachments/assets/7caa4594-8504-40f8-99d6-c3faca2f00c5" />
+<img width="500" height="400" alt="CaptureZZ" src="https://github.com/user-attachments/assets/7caa4594-8504-40f8-99d6-c3faca2f00c5" />
 
 ## Adds TOZED LT70-C modem support to 3GInfo Lite.
 
