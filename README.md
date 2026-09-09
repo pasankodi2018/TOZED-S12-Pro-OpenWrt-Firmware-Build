@@ -94,7 +94,7 @@ Carrier aggregation information
 LTE / LTE-A mode
 Modem LED Monitoring
 
-<img width="616" height="624" alt="CaptureSS" src="https://github.com/user-attachments/assets/3bfa323f-a265-4d29-98ed-66e7406029f5" />
+<img width="500" height="400" alt="CaptureSS" src="https://github.com/user-attachments/assets/3bfa323f-a265-4d29-98ed-66e7406029f5" />
 
 ## The project includes modem LED monitoring for the S12 PRO.
 
@@ -106,7 +106,7 @@ Internet available
 Internet unavailable
 Boot Network Detection Fix
 
-<img width="1000" height="1000" alt="s12_4" src="https://github.com/user-attachments/assets/e3178bf9-b9d6-402c-8881-442fecef5329" />
+<img width="500" height="400" alt="s12_4" src="https://github.com/user-attachments/assets/e3178bf9-b9d6-402c-8881-442fecef5329" />
 
 
 Some S12 PRO units may not correctly detect the LTE modem/network immediately after power-on.
