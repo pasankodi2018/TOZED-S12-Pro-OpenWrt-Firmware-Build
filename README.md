@@ -134,7 +134,7 @@ Releases → Latest Release → Assets
 and download the firmware image.
 
 # Installation
-## 1. Flash OpenWrt Firmware
+## Step 1: Flash OpenWrt Firmware
 
 Download the appropriate S12 PRO firmware from the GitHub Releases page.
 https://github.com/pasankodi2018/TOZED-S12-Pro-OpenWrt-Firmware-Build/releases/tag/v1.0.0
@@ -150,8 +150,7 @@ Important
 Do not interrupt power while the router is flashing.
 
 Wait until the router completely reboots.
-
-## 2. Connect to the Router
+## Step 2: Connect to the Router
 
 After OpenWrt starts, connect through SSH.
 
@@ -163,7 +162,16 @@ username - root
 
 password - root
 
-## 3. One-Click Installation
+
+## Step 3: Restart Network Service (Recommended)
+
+Before starting the installation, restart the OpenWrt network service:
+
+```sh
+/etc/init.d/network restart
+
+
+## **Step 4 : One-Click Installation**
 
 Download the installation script:
 
