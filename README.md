@@ -158,7 +158,7 @@ default in kwrt
 
 ```sh
 ssh root@10.0.0.1
-
+```
 username - root
 
 password - root
@@ -170,6 +170,7 @@ Before starting the installation, restart the OpenWrt network service:
 
 ```sh
 /etc/init.d/network restart
+```
 
 
 ## Step 4 : One-Click Installation
