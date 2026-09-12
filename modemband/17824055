@@ -5,11 +5,9 @@ getsupportedbands() {
 	echo "$_DEFAULT_LTE_BANDS"
 }
 
-
 getinfo() {
 	echo "TOZED LT70 Spreadtrum Communication CO."
 }
-
 
 setbands() {
     BANDS="$1"
@@ -50,43 +48,40 @@ setbands() {
     sms_tool -D -d "$_DEVICE" at 'AT+CFUN=1'
 }
 
-
 getbands() {
-    O=$(sms_tool -D -d $_DEVICE at 'AT+SPLBAND=0' 2>/dev/null | grep +SPLBAND)
-    O=$(echo "$O" | tr -d '\r' | tr -d ' ')
+    RAW=$(sms_tool -D -d "$_DEVICE" at 'AT+SPLBAND=0' 2>/dev/null | grep '+SPLBAND:')
+    VALS=$(echo "$RAW" | tr -d '\r\n ' | sed 's/^+SPLBAND://')
+    [ -z "$VALS" ] && return
 
-    case "$O" in
-    "+SPLBAND:0,0,0,0,0") echo "" ;;
-        "+SPLBAND:0,0,0,1,0") echo "1" ;;
-        "+SPLBAND:0,0,0,4,0") echo "3" ;;
-        "+SPLBAND:0,0,0,128,0") echo "8" ;;
-        "+SPLBAND:0,128,0,0,0") echo "40" ;;
-        "+SPLBAND:0,64,0,0,0") echo "41" ;;
-        "+SPLBAND:0,0,0,5,0") echo "1 3" ;;
-        "+SPLBAND:0,0,0,129,0") echo "1 8" ;;
-        "+SPLBAND:0,128,0,1,0") echo "1 40" ;;
-        "+SPLBAND:0,64,0,1,0") echo "1 41" ;;
-        "+SPLBAND:0,0,0,132,0") echo "3 8" ;;
-        "+SPLBAND:0,128,0,4,0") echo "3 40" ;;
-        "+SPLBAND:0,64,0,4,0") echo "3 41" ;;
-        "+SPLBAND:0,128,0,128,0") echo "8 40" ;;
-        "+SPLBAND:0,64,0,128,0") echo "8 41" ;;
-        "+SPLBAND:0,192,0,0,0") echo "40 41" ;;
-        "+SPLBAND:0,0,0,133,0") echo "1 3 8" ;;
-        "+SPLBAND:0,128,0,5,0") echo "1 3 40" ;;
-        "+SPLBAND:0,64,0,5,0") echo "1 3 41" ;;
-        "+SPLBAND:0,128,0,129,0") echo "1 8 40" ;;
-        "+SPLBAND:0,64,0,129,0") echo "1 8 41" ;;
-        "+SPLBAND:0,192,0,1,0") echo "1 40 41" ;;
-        "+SPLBAND:0,128,0,132,0") echo "3 8 40" ;;
-        "+SPLBAND:0,64,0,132,0") echo "3 8 41" ;;
-        "+SPLBAND:0,192,0,4,0") echo "3 40 41" ;;
-        "+SPLBAND:0,192,0,128,0") echo "8 40 41" ;;
-        "+SPLBAND:0,128,0,133,0") echo "1 3 8 40" ;;
-        "+SPLBAND:0,64,0,133,0") echo "1 3 8 41" ;;
-        "+SPLBAND:0,192,0,5,0") echo "1 3 40 41" ;;
-        "+SPLBAND:0,192,0,129,0") echo "1 8 40 41" ;;
-        "+SPLBAND:0,192,0,132,0") echo "3 8 40 41" ;;
-        "+SPLBAND:0,192,0,133,0") echo "1 3 8 40 41" ;;
-    esac
+    tdd33_48=$(echo "$VALS" | cut -d',' -f2)
+    fdd1_16=$(echo "$VALS" | cut -d',' -f4)
+
+    RES=""
+
+    # Decode FDD 1-16 (Bands 1, 3, 5, 7, 8)
+    if [ -n "$fdd1_16" ] && [ "$fdd1_16" -gt 0 ] 2>/dev/null; then
+        for b in 1 3 5 7 8; do
+            if [ $(( (fdd1_16 >> (b - 1)) & 1 )) -eq 1 ]; then
+                RES="${RES:+$RES }$b"
+            fi
+        done
+    fi
+
+    # Decode TDD 33-48 (Bands 38, 39, 40, 41)
+    if [ -n "$tdd33_48" ] && [ "$tdd33_48" -gt 0 ] 2>/dev/null; then
+        for b in 38 39 40 41; do
+            if [ $(( (tdd33_48 >> (b - 33)) & 1 )) -eq 1 ]; then
+                RES="${RES:+$RES }$b"
+            fi
+        done
+        # Fallback check for B41 (vendor firmware value 64 / 192)
+        if [ "$tdd33_48" -eq 64 ] || [ "$tdd33_48" -eq 192 ]; then
+            case " $RES " in
+                *" 41 "*) ;;
+                *) RES="${RES:+$RES }41" ;;
+            esac
+        fi
+    fi
+
+    echo "$RES"
 }
